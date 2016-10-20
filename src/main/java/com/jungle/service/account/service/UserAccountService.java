@@ -54,11 +54,15 @@ public class UserAccountService {
 
     public Page<UserAccount> fetchAllAccount(String keyWord, int type, int pageNum, int pageSize) {
         keyWord = null == keyWord ? "" : keyWord.trim();
+        Pageable pageable = new PageRequest(pageNum, pageSize);
+        Page<UserAccount> pageResult;
         if(!StringUtils.isEmpty(keyWord)) {
             keyWord = DataUtil.refactorLikeChar(keyWord);
+            pageResult = userAccountRepository.findByUserNameLikeAndType(keyWord, type, pageable);
         }
-        Pageable pageable = new PageRequest(pageNum, pageSize);
-        Page<UserAccount> pageResult = userAccountRepository.findByUserNameLikeAndType(keyWord, type, pageable);
+        else {
+            pageResult = userAccountRepository.findByType(type, pageable);
+        }
         return pageResult;
     }
     @Transactional

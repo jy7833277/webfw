@@ -40,5 +40,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserAccountRepository extends JpaRepository<UserAccount, String> {
     UserAccount findByUserName(String userName);
     UserAccount findByPhoneNumber(String phoneNumber);
+    Page<UserAccount> findByType(int type, Pageable pageable);
     Page<UserAccount> findByUserNameLikeAndType(String keyWord, int type, Pageable pageable);
 }

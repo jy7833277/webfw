@@ -18,13 +18,6 @@ public class TestController {
     @Resource
     private TestService testService;
 
-    @RequestMapping(value = "/hello")
-    public Map<String, Object> test() {
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("test", "Hello world!");
-        return resultMap;
-    }
-
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ItemsResult<Map<String, Object>> fetchAllList() {
         return testService.fetchAll();

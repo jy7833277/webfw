@@ -9,11 +9,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestClientException;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * ******************************************
@@ -57,13 +61,52 @@ public class UserAccountService {
         Page<UserAccount> pageResult = userAccountRepository.findByUserNameLikeAndType(keyWord, type, pageable);
         return pageResult;
     }
+    @Transactional
+    public UserAccount createAccount(UserAccount userAccount) {
+        Assert.notNull(userAccount);
+        Assert.hasText(userAccount.getUserName());
+        Assert.hasText(userAccount.getPassword());
+        UserAccount existAccount = userAccountRepository.findByUserName(userAccount.getUserName());
+        if(null != existAccount) {
+            throw new RestClientException("user_name already exist");
+        }
+        existAccount = userAccountRepository.findByPhoneNumber(userAccount.getPhoneNumber());
+        if(null != existAccount) {
+            throw new RestClientException("phone_number already exist");
+        }
+        userAccount = userAccountRepository.saveAndFlush(userAccount);
+        return userAccount;
+    }
 
-    public List<UserAccount> filterPassword(List<UserAccount> list) {
-        if(!CollectionUtils.isEmpty(list)) {
-            for(UserAccount userAccount : list) {
-                userAccount.setPassword("");
+    @Transactional
+    public UserAccount deleteAccount(String id) {
+        Assert.hasText(id);
+        UserAccount existAccount = userAccountRepository.findOne(id);
+        if(null == existAccount) {
+            throw new RestClientException("account not exist");
+        }
+        userAccountRepository.delete(id);
+        LOG.info("account-delete, user_name:{}, phone_number:{}, type:{}", existAccount.getUserName(), existAccount.getPhoneNumber(), existAccount.getType());
+        return existAccount;
+    }
+    /**
+     * 过滤特殊字符
+     * @param obj
+     * @return
+     */
+    public <T> T filterPassword(T obj) {
+        if(obj instanceof  UserAccount) {
+            UserAccount userAccount = (UserAccount) obj;
+            userAccount.setPassword("");
+        }
+        else if(obj instanceof Collection){
+            Collection<UserAccount> list = (Collection<UserAccount>) obj;
+            if(!CollectionUtils.isEmpty(list)) {
+                for(UserAccount userAccount : list) {
+                    userAccount.setPassword("");
+                }
             }
         }
-        return list;
+        return obj;
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -27,7 +26,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,7 +33,7 @@ import java.util.Map;
  * @version Created on 2016/4/27.
  */
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @EnableJpaRepositories(
         basePackages = {
                 "com.jungle.service.account.repository.mysql.jpa"
@@ -53,6 +51,30 @@ public class MySQLConfig {
     private String c3p0User;
     @Value("${c3p0.password}")
     private String c3p0Password;
+    @Value(("${c3p0.initialPoolSize}"))
+    private int initPoolSize;
+    @Value(("${c3p0.maxPoolSize}"))
+    private int maxPoolSize;
+    @Value(("${c3p0.minPoolSize}"))
+    private int minPoolSize;
+    @Value(("${c3p0.maxIdleTime}"))
+    private int maxIdleTime;
+    @Value(("${c3p0.maxStatements}"))
+    private int maxStatements;
+    @Value(("${c3p0.maxStatementsPerConnection}"))
+    private int maxStatementsPerConnection;
+    @Value(("${c3p0.idleConnectionTestPeriod}"))
+    private int idleConnectionTestPeriod;
+    @Value(("${c3p0.autoCommitOnClose}"))
+    private boolean autoCommitOnClose;
+    @Value(("${c3p0.acquireIncrement}"))
+    private int acquireIncrement;
+    @Value(("${c3p0.acquireRetryDelay}"))
+    private int acquireRetryDelay;
+    @Value(("${c3p0.acquireRetryAttempts}"))
+    private int acquireRetryAttempts;
+    @Value(("${c3p0.breakAfterAcquireFailure}"))
+    private boolean breakAfterAcquireFailure;
     private ComboPooledDataSource dataSource;
     @Bean
     public DataSource dataSource() {
@@ -63,18 +85,18 @@ public class MySQLConfig {
                 dataSource.setJdbcUrl(c3p0Url);
                 dataSource.setUser(c3p0User);
                 dataSource.setPassword(c3p0Password);
-                dataSource.setInitialPoolSize(10);
-                dataSource.setMaxIdleTime(25000);
-                dataSource.setMaxPoolSize(100);
-                dataSource.setMinPoolSize(5);
-                dataSource.setMaxStatements(10);
-                dataSource.setMaxStatementsPerConnection(0);
-                dataSource.setIdleConnectionTestPeriod(30);
-                dataSource.setAutoCommitOnClose(false);
-                dataSource.setAcquireIncrement(5);
-                dataSource.setAcquireRetryDelay(1000);
-                dataSource.setAcquireRetryAttempts(30);
-                dataSource.setBreakAfterAcquireFailure(false);
+                dataSource.setInitialPoolSize(initPoolSize);
+                dataSource.setMaxPoolSize(maxPoolSize);
+                dataSource.setMinPoolSize(minPoolSize);
+                dataSource.setMaxIdleTime(maxIdleTime);
+                dataSource.setMaxStatements(maxStatements);
+                dataSource.setMaxStatementsPerConnection(maxStatementsPerConnection);
+                dataSource.setIdleConnectionTestPeriod(idleConnectionTestPeriod);
+                dataSource.setAutoCommitOnClose(autoCommitOnClose);
+                dataSource.setAcquireIncrement(acquireIncrement);
+                dataSource.setAcquireRetryDelay(acquireRetryDelay);
+                dataSource.setAcquireRetryAttempts(acquireRetryAttempts);
+                dataSource.setBreakAfterAcquireFailure(breakAfterAcquireFailure);
             } catch (PropertyVetoException e) {
                 logger.error("com.jungle.service.application.MySQLConfig#dataSource, mysql dataSource config property error");
             }
@@ -82,12 +104,6 @@ public class MySQLConfig {
         return dataSource;
     }
 
-    @Bean
-    public DataSourceTransactionManager transactionManager() {
-        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
-        transactionManager.setDataSource(dataSource());
-        return transactionManager;
-    }
     @Bean
     public SqlSessionFactoryBean sqlSessionFactory() {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
@@ -109,7 +125,7 @@ public class MySQLConfig {
         hibernateJpaVendorAdapter.setShowSql(true);
         hibernateJpaVendorAdapter.setGenerateDdl(true);
         hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
-        hibernateJpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5InnoDBDialect");
+        hibernateJpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
         return hibernateJpaVendorAdapter;
     }
 
@@ -130,22 +146,28 @@ public class MySQLConfig {
         entityManagerFactory.setPersistenceProvider(new HibernatePersistenceProvider());
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());
         entityManagerFactory.setJpaDialect(jpaDialect());
-        Map<String, Object> jpaPropertyMap = new HashMap<>();
-        jpaPropertyMap.put("hibernate.query.substitutions", "true 1, false 0");
-        jpaPropertyMap.put("hibernate.default_batch_fetch_size", 16);
-        jpaPropertyMap.put("hibernate.max_fetch_depth", 2);
-        jpaPropertyMap.put("hibernate.generate_statistics", true);
-        jpaPropertyMap.put("hibernate.bytecode.use_reflection_optimizer", true);
-        jpaPropertyMap.put("hibernate.cache.use_second_level_cache", false);
-        jpaPropertyMap.put("hibernate.cache.use_query_cache", false);
+        Map<String, Object> jpaPropertyMap = entityManagerFactory.getJpaPropertyMap();
+//        jpaPropertyMap.put("hibernate.query.substitutions", "true 1, false 0");
+//        jpaPropertyMap.put("hibernate.default_batch_fetch_size", 16);
+//        jpaPropertyMap.put("hibernate.max_fetch_depth", 2);
+//        jpaPropertyMap.put("hibernate.generate_statistics", true);
+//        jpaPropertyMap.put("hibernate.bytecode.use_reflection_optimizer", true);
+//        jpaPropertyMap.put("hibernate.cache.use_second_level_cache", false);
+//        jpaPropertyMap.put("hibernate.cache.use_query_cache", false);
+        jpaPropertyMap.put("hibernate.hbm2ddl.auto", "update");
         entityManagerFactory.setJpaPropertyMap(jpaPropertyMap);
         return entityManagerFactory;
     }
-
+//        @Bean
+//    public DataSourceTransactionManager transactionManager() {
+//        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+//        transactionManager.setDataSource(dataSource());
+//        return transactionManager;
+//    }
     @Bean
-    public PlatformTransactionManager jpaTransactionManager() {
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory().getNativeEntityManagerFactory());
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
 

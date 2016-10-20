@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * ******************************************
@@ -33,7 +35,10 @@ import org.springframework.stereotype.Repository;
  * @Description
  * @date 2016/10/20
  */
+@Transactional
 @Repository
 public interface UserAccountRepository extends JpaRepository<UserAccount, String> {
+    UserAccount findByUserName(String userName);
+    UserAccount findByPhoneNumber(String phoneNumber);
     Page<UserAccount> findByUserNameLikeAndType(String keyWord, int type, Pageable pageable);
 }

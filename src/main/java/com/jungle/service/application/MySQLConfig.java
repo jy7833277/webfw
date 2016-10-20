@@ -37,7 +37,9 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = {"com.jungle.service.repository.mysql.jpa"}
+        basePackages = {
+                "com.jungle.service.account.repository.mysql.jpa"
+        }
 )
 @PropertySource(value = {"classpath:c3p0-config.properties"})
 @MapperScan(basePackages = "com.*.*.repository.mysql.mybatis")
@@ -121,8 +123,9 @@ public class MySQLConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource());
         entityManagerFactory.setPackagesToScan(
-                "com.jungle.service.repository.mysql.jpa",
-                "com.jungle.service.domain"
+                "com.jungle.service.domain",
+                "com.jungle.service.account.repository.mysql.jpa",
+                "com.jungle.service.account.domain"
                 );
         entityManagerFactory.setPersistenceProvider(new HibernatePersistenceProvider());
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());

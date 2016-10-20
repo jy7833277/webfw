@@ -1,16 +1,11 @@
 package com.jungle.service.controller;
 
 import com.jungle.service.commons.ItemsResult;
-import com.jungle.service.domain.TestUserDomain;
 import com.jungle.service.service.TestService;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.net.HttpURLConnection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

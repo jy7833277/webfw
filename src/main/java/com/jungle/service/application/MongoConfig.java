@@ -23,7 +23,7 @@ import java.util.Arrays;
 /**
  * mongo配置
  *
- * @author 杨文军(132500)
+ * @author Jungle
  * @version Created on 2016/1/25.
  */
 @Configuration

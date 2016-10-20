@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 /**
- * @author 杨文军(132500)
+ * @author Jungle
  * @version Created on 2016/5/4.
  */
 @Data

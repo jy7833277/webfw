@@ -4,7 +4,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
- * @author 杨文军(132500)
+ * @author Jungle
  * @version Created on 2016/4/27.
  */
 @Order(1)

@@ -15,7 +15,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 /**
  * 多语言配置
  *
- * @author 杨文军(132500)
+ * @author Jungle
  * @version Created on 2016/1/25.
  */
 @Configuration

@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 对象工具静态方法
  *
- * @author 杨文军(132500)
+ * @author Jungle
  *         Created by jungle on 15/10/28.
  */
 public class ObjectUtil {

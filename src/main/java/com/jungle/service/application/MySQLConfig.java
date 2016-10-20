@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * @author 杨文军(132500)
+ * @author Jungle
  * @version Created on 2016/4/27.
  */
 @Configuration
@@ -122,7 +122,7 @@ public class MySQLConfig {
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setShowSql(true);
+        hibernateJpaVendorAdapter.setShowSql(false);
         hibernateJpaVendorAdapter.setGenerateDdl(true);
         hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
         hibernateJpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");

@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 
 /**
- * @author 杨文军(132500)
+ * @author Jungle
  * @version Created on 2016/4/27.
  */
 @Configuration

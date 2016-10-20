@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author 杨文军(132500)
+ * @author Jungle
  * @version Created on 2016/3/24.
  */
 public class ItemsResult<T> {

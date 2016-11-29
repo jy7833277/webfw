@@ -15,7 +15,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.Arrays;
@@ -28,7 +27,7 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableMongoRepositories(basePackages = {
-        "com.jungle.service.repository.mongo"
+        "com.jungle.service.demo.repository.mongo"
 })
 @PropertySource(value = {"classpath:mongo.properties", "classpath:config.properties"})
 public class MongoConfig extends AbstractMongoConfiguration {

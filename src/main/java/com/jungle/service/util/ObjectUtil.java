@@ -17,7 +17,7 @@ public class ObjectUtil {
     public static boolean convertObjectToBoolean(Object obj) {
         boolean resultValue;
         if(null == obj) {
-            throw new RuntimeException("com.nd.smartq.interaction.util.ObjectUtil#convertObjectToBoolean, null cannot cast to boolean");
+            throw new RuntimeException("ObjectUtil#convertObjectToBoolean, null cannot cast to boolean");
         }
         else if(obj instanceof Boolean) {
             resultValue = (Boolean) obj;

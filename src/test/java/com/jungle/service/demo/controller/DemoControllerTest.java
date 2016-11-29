@@ -1,4 +1,4 @@
-package com.jungle.service.controller;
+package com.jungle.service.demo.controller;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.jungle.service.AbstractTest;
@@ -18,10 +18,10 @@ import java.util.Map;
  * @author 杨文军(132500)
  * @version Created on 2016/5/4.
  */
-public class TestControllerTest extends AbstractTest {
+public class DemoControllerTest extends AbstractTest {
     @Test
-    public void testHello() throws Exception {
-        String helloUrl = "/v0.1/api/test/hello";
+    public void testGetAll() throws Exception {
+        String helloUrl = "/v0.1/api/demo";
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.request(HttpMethod.GET, helloUrl)
                 .characterEncoding(CharEncoding.UTF_8).accept(MediaType.APPLICATION_JSON).contentType(MediaType
                         .APPLICATION_JSON);
@@ -33,6 +33,23 @@ public class TestControllerTest extends AbstractTest {
         JavaType javaType = objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Object.class);
         Map<String, Object> map = objectMapper.readValue(response.getContentAsString(), javaType);
         Assert.assertNotNull(map);
-        Assert.assertTrue(map.containsKey("test"));
+        Assert.assertTrue(map.containsKey("count"));
+    }
+
+    @Test
+    public void testGetAllDemoUsers() throws Exception {
+        String helloUrl = "/v0.1/api/demo/users";
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.request(HttpMethod.GET, helloUrl)
+                .characterEncoding(CharEncoding.UTF_8).accept(MediaType.APPLICATION_JSON).contentType(MediaType
+                        .APPLICATION_JSON);
+//        request.content(objectMapper.writeValueAsString(object));
+        ResultActions result = mockMvc.perform(request);
+        MockHttpServletResponse response = result.andReturn().getResponse();
+        response.setCharacterEncoding(CharEncoding.UTF_8);
+
+        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Object.class);
+        Map<String, Object> map = objectMapper.readValue(response.getContentAsString(), javaType);
+        Assert.assertNotNull(map);
+        Assert.assertTrue(map.containsKey("count"));
     }
 }

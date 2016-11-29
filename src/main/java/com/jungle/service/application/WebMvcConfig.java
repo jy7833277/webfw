@@ -23,9 +23,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.handler.HandlerExceptionResolverComposite;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-
-import javax.annotation.Resource;
+//import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+//import javax.annotation.Resource;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +41,11 @@ import java.util.List;
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
     private static final boolean jaxb2Present = ClassUtils.isPresent("javax.xml.bind.Binder", WebMvcConfig.class.getClassLoader());
     private static final boolean jackson2Present = ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", WebMvcConfig.class.getClassLoader()) && ClassUtils.isPresent("com.fasterxml.jackson.core.JsonGenerator", WebMvcConfig.class.getClassLoader());
-    /**
-     * 多语言解析处理
-     */
-    @Resource
-    private LocaleChangeInterceptor localeChangeInterceptor;
+//    /**
+//     * 多语言解析处理拦截获取locale
+//     */
+//    @Resource
+//    private LocaleChangeInterceptor localeChangeInterceptor;
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -88,7 +87,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor);
+//        registry.addInterceptor(localeChangeInterceptor);
         super.addInterceptors(registry);
     }
 

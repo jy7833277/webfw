@@ -40,7 +40,7 @@ import java.util.Map;
         }
 )
 @PropertySource(value = {"classpath:c3p0-config.properties"})
-@MapperScan(basePackages = "com.*.*.repository.mysql.mybatis")
+@MapperScan(basePackages = "com.*.*.*.repository.mysql.mybatis")
 public class MySQLConfig {
     private static final Logger logger = LoggerFactory.getLogger(MySQLConfig.class);
     @Value("${c3p0.driverClass}")
@@ -105,21 +105,6 @@ public class MySQLConfig {
     }
 
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactory() {
-        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(dataSource());
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        try {
-            sqlSessionFactory.setConfigLocation(resolver.getResource("classpath:com/jungle/service/repository/mysql/mybatis/conf/mybatis-config.xml"));
-            //多个地址逗号分隔
-            sqlSessionFactory.setMapperLocations(resolver.getResources("classpath*:com/*/*/repository/mysql/mybatis/dto/*.xml"));
-        } catch (IOException e) {
-            logger.error("com.jungle.service.application.MySQLConfig#sqlSessionFactory, sqlSessionFactory set mapping path error.");
-        }
-        return sqlSessionFactory;
-    }
-
-    @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(false);
@@ -139,7 +124,7 @@ public class MySQLConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource());
         entityManagerFactory.setPackagesToScan(
-                "com.jungle.service.domain",
+                "com.jungle.service.demo.domain",
                 "com.jungle.service.account.repository.mysql.jpa",
                 "com.jungle.service.account.domain"
                 );
@@ -169,6 +154,25 @@ public class MySQLConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
+    }
+
+    /**
+     * mybatis配置
+     * @return
+     */
+    @Bean
+    public SqlSessionFactoryBean sqlSessionFactory() {
+        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(dataSource());
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        try {
+            sqlSessionFactory.setConfigLocation(resolver.getResource("classpath:mybatis/mybatis-config.xml"));
+            //多个地址逗号分隔
+            sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:mybatis/*/dto/*.xml"));
+        } catch (IOException e) {
+            logger.error("com.jungle.service.application.MySQLConfig#sqlSessionFactory, sqlSessionFactory set mapping path error.");
+        }
+        return sqlSessionFactory;
     }
 
     /**

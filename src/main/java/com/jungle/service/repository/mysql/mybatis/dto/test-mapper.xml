@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jungle.service.repository.mysql.mybatis.TestUserDao">
-    <select id="findUserByName" resultType="TestUser">
-        select * from USER where username = #{userName}
-    </select>
-</mapper>

@@ -49,8 +49,8 @@ public class UserAccountTest extends AbstractTest {
 
     public UserAccount createAccount() {
         UserAccount userAccount = new UserAccount();
-        userAccount.setUserName("junit-test");
-        userAccount.setPassword(EncryptUtil.encryptMD5_Salt("test"));
+        userAccount.setUserName("junit-demo");
+        userAccount.setPassword(EncryptUtil.encryptMD5_Salt("demo"));
         userAccount.setType(100);
         userAccount.setPhoneNumber("100000000000");
         userAccount = userAccountService.createAccount(userAccount);

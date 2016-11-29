@@ -5,10 +5,12 @@
 <configuration>
     <!-- 命名空间 -->
     <typeAliases>
-        <typeAlias alias="TestUser" type="com.jungle.service.domain.TestUserDomain"/>
+        <typeAlias alias="DemoUser" type="com.jungle.service.demo.domain.DemoUserDomain"/>
     </typeAliases>
 
     <!-- 映射map -->
     <mappers>
+        <!--MySQLConfig中已配置映射扫描，此处不能重复配置-->
+        <!--<mapper resource="mybatis/demo/dto/demo-mapper.xml"></mapper>-->
     </mappers>
 </configuration>

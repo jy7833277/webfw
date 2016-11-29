@@ -2,27 +2,27 @@
  * ******************************************
  * <p>
  * Copyright 2016
- * NetDragon All rights reserved
+ * Jungle All rights reserved
  * <p>
  * *****************************************
  * <p>
  * *** Company ***
- * NetDragon
+ * Jungle
  * <p>
  * *****************************************
  * <p>
  * *** Team ***
- * SmartQ
+ * jungle
  * <p>
  * *****************************************
  *
  * @Title package-info
- * @Package com.jungle.service.account
+ * @Package com.jungle.service.demo
  * <p>
  * *****************************************
- * @Description 账号模块
- * @author 杨文军(132500)
+ * @Description 测试试用模块
+ * @author Jungle
  * @version V1.0
- * @date 2016/10/20
+ * @date 2016/11/29
  */
-package com.jungle.service.account;
+package com.jungle.service.demo;

@@ -1,4 +1,4 @@
-package com.jungle.service.domain;
+package com.jungle.service.demo.domain;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 @Entity(name = "user")
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
-public class TestUserDomain {
+public class DemoUserDomain {
     @Id
     private String id;
     @Column(name = "username")

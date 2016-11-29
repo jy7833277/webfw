@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void init(WebSecurity web) throws Exception {
-//        ((WebSecurity.IgnoredRequestConfigurer) web.ignoring().antMatchers(new String[]{"/$test/**"})).antMatchers
+//        ((WebSecurity.IgnoredRequestConfigurer) web.ignoring().antMatchers(new String[]{"/$demo/**"})).antMatchers
 //                (HttpMethod.OPTIONS, new String[]{"/**"});
         super.init(web);
     }

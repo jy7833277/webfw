@@ -1,6 +1,6 @@
-package com.jungle.service.repository.mongo;
+package com.jungle.service.demo.repository.mongo;
 
-import com.jungle.service.repository.mongo.common.MongoCommonDao;
+import com.jungle.service.commons.MongoCommonDao;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
@@ -15,7 +15,7 @@ import java.util.Map;
  * @version Created on 2016/5/3.
  */
 @Repository
-public class TestDao extends MongoCommonDao {
+public class DemoDao extends MongoCommonDao {
     private static final String COLLECTION_NAME = "test";
 
     @Resource

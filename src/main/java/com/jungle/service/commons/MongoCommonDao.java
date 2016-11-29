@@ -1,4 +1,4 @@
-package com.jungle.service.repository.mongo.common;
+package com.jungle.service.commons;
 
 import com.jungle.service.util.ObjectUtil;
 

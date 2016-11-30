@@ -5,6 +5,7 @@ import org.apache.commons.lang3.CharEncoding;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -34,9 +35,10 @@ import java.util.List;
  * @version Created on 2016/4/27.
  */
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.jungle.service"})
 @EnableScheduling
 @EnableAsync
+@ComponentScan(basePackages = {"com.jungle.service"})
+//@ImportResource({"classpath:spring/applicationContext.xml"})
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
     private static final boolean jaxb2Present = ClassUtils.isPresent("javax.xml.bind.Binder", WebMvcConfig.class.getClassLoader());

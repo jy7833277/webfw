@@ -31,16 +31,18 @@ public class I18NConfig {
         messageSource.setBasenames("i18n/message");
         messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding(CharEncoding.UTF_8);
+        //禁用加载服务器系统语言
+        messageSource.setFallbackToSystemLocale(false);
         return messageSource;
     }
 
     @Bean(name = "localeResolver")
     public static LocaleResolver localeResolver() {
-        //SessionLocaleResolver默认URL参数locale设定语言环境
-//        LocaleResolver localeResolver = new SessionLocaleResolver();
-//        ((SessionLocaleResolver)localeResolver).setDefaultLocale(Locale.CHINA);
-        //AcceptHeaderLocaleResolver默认http header中Accept-Language设定语言环境
-        LocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+//        SessionLocaleResolver默认URL参数locale设定语言环境
+//        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+//        localeResolver.setDefaultLocale(Locale.CHINA);
+//        AcceptHeaderLocaleResolver默认http header中Accept-Language设定语言环境
+        AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
         return localeResolver;
     }
 

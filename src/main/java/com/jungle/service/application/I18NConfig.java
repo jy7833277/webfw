@@ -28,7 +28,7 @@ public class I18NConfig {
     @Bean(name = "messageSource")
     public static ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasenames("i18n/message");
+        messageSource.setBasenames("i18n/message", "classpath:org/hibernate/validator/ValidationMessages");
         messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding(CharEncoding.UTF_8);
         //禁用加载服务器系统语言

@@ -22,6 +22,10 @@
         <hibernatecommons.version>4.0.4.Final</hibernatecommons.version>
         <hibernatevalidate.version>5.2.4.Final</hibernatevalidate.version>
         <hibernate.version>4.3.5.Final</hibernate.version>
+        <jetty.context>/</jetty.context>
+        <jetty.http.port>9088</jetty.http.port>
+        <jetty.https.port>9443</jetty.https.port>
+        <jetty.stopPort>10080</jetty.stopPort>
     </properties>
 
     <dependencies>
@@ -595,7 +599,24 @@
             </plugins>
         </pluginManagement>
         <plugins>
-
+            <!--maven jetty 插件配置 -->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.16.v20140903</version>
+                <configuration>
+                    <webApp>
+                        <contextPath>${jetty.context}</contextPath>
+                    </webApp>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>${jetty.http.port}</port>
+                        </connector>
+                    </connectors>
+                    <stopKey>jetty</stopKey>
+                    <stopPort>${jetty.stopPort}</stopPort>
+                </configuration>
+            </plugin>
         </plugins>
         <filters>
             <filter>src/main/filters/filter-${env}.properties</filter>
